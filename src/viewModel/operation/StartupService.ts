@@ -1,6 +1,6 @@
 import { ViewModelRepository } from '../repository';
 import { Routes } from '../routes.ts';
-import { Project, UserInfo } from '../../model/domain.ts';
+import { OpenParams, Project, UserInfo } from '../../model/domain.ts';
 import { RequestResult, RichProject, Rpi } from '../../model/rpi';
 import { ProgramService } from '../../model/service/ProgramService.ts';
 import { LoaderService } from '../domain/LoaderService.ts';
@@ -57,7 +57,11 @@ export class StartupService {
         }
     };
 
-    onAppStartup = async (captcha?: string): Promise<void> => {
+    onAppStartup = async (
+        captcha?: string,
+        open?: OpenParams
+    ): Promise<void> => {
+        void open;
         const result: RequestResult<UserInfo> =
             await this.rpi.getUserInfoRequest();
 
@@ -90,7 +94,7 @@ export class StartupService {
             locationWithoutLastSlash === Routes.Home ||
             qrPagePattern.test(locationWithoutLastSlash)
         ) {
-            await this.openDefaultProject(userInfo);
+            await this.openDefaultProject(userInfo, open);
         }
 
         // OAUTH
@@ -101,7 +105,7 @@ export class StartupService {
                 undefined
             );
             if (!lastOpenedProjectUuid) {
-                await this.openDefaultProject(userInfo);
+                await this.openDefaultProject(userInfo, open);
             } else {
                 await this.openProjectById(userInfo, lastOpenedProjectUuid);
             }
@@ -109,13 +113,13 @@ export class StartupService {
 
         // PROJECT DEFAULT PAGE ENTER
         else if (locationWithoutLastSlash === Routes.ProjectDefault) {
-            await this.openDefaultProject(userInfo);
+            await this.openDefaultProject(userInfo, open);
         }
 
         // PROJECTS PAGE ENTER
         else if (locationWithoutLastSlash === Routes.Projects) {
             if (!userInfo.isAuthenticated) {
-                await this.openDefaultProject(userInfo);
+                await this.openDefaultProject(userInfo, open);
             }
         }
 
@@ -237,7 +241,10 @@ export class StartupService {
         }
     }
 
-    private async openDefaultProject(userInfo: UserInfo): Promise<void> {
+    private async openDefaultProject(
+        userInfo: UserInfo,
+        open?: OpenParams
+    ): Promise<void> {
         this.repository.projectViewModelRepository.setReadOnly(false);
         if (userInfo.isAuthenticated) {
             const result = await this.rpi.getDefaultProjectRequest(
@@ -276,10 +283,29 @@ export class StartupService {
                 this.ideService.resetEditor();
             }
         } else {
+            if (open === 'latex') {
+                this.repository.projectViewModelRepository.setProjectType(
+                    'latex'
+                );
+            }
+            if (open === 'markdown') {
+                this.repository.projectViewModelRepository.setProjectType(
+                    'markdown'
+                );
+            }
             this.repository.setLocation(Routes.ProjectDefault);
             this.programService.setNewProgram(
                 this.repository.persistenceViewModelRepository.lastProgram()
             );
+        }
+        console.log('open', open);
+        if (open === 'ai') {
+            this.repository.settingsViewModelRepository.setShowProjectPromptModal(
+                true
+            );
+        }
+        if (open === 'login' && !userInfo.isAuthenticated) {
+            this.repository.authViewModelRepository.setCurrentView('login');
         }
     }
 }

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
+    OpenParams,
     ProgramRoundStrategy,
     ProjectType,
     SegmentType,
@@ -154,9 +155,9 @@ export class Controller {
 
     onAppEnterRequest = createAsyncThunk(
         'onAppEnter',
-        async ({ captcha }: { captcha?: string }) => {
+        async ({ captcha, open }: { captcha?: string; open?: OpenParams }) => {
             this.wrapper('onAppEnter', () =>
-                this.startupService.onAppStartup(captcha)
+                this.startupService.onAppStartup(captcha, open)
             );
         }
     );

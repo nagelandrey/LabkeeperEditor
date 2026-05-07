@@ -2,7 +2,7 @@ import { Instruction } from './instruction';
 import { Result } from './result';
 import './style.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, StorageState } from '../../../store';
+import { AppDispatch } from '../../../store';
 import { controller } from '../../../../main.tsx';
 import { useDictionary } from '../../../store/selectors/translations';
 
@@ -17,8 +17,6 @@ export const Viewer = () => {
     const dispatch = useDispatch<AppDispatch>();
     const dictionary = useSelector(useDictionary);
     const isReadonly = useSelector(useIsProjectReadonly);
-
-    const mode = useSelector((state: StorageState) => state.project.mode);
 
     return (
         <div className="viewer-container">
@@ -42,7 +40,7 @@ export const Viewer = () => {
                 </div>
                 <div />
             </div>
-            <Result mode={mode} />
+            <Result />
             <Instruction />
             <PromptModal />
         </div>
