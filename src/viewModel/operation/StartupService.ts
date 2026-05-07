@@ -201,12 +201,18 @@ export class StartupService {
                 project.program,
                 project.lastProgramResult
             );
+            this.repository.projectViewModelRepository.setProjectType(
+                project.projectType
+            );
             this.repository.setLocation(
                 Routes.Project.replace(':id', project.projectId)
             );
             this.observerService.setUserState(
                 States.STATE_PROJECT,
                 project.projectId
+            );
+            this.repository.projectViewModelRepository.setPdfUri(
+                project.lastPdf
             );
             this.repository.ideViewModelRepository.setGetProjectRequestState(
                 'ok'

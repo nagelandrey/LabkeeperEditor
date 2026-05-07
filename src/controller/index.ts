@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
     ProgramRoundStrategy,
-    ProjectMode,
+    ProjectType,
     SegmentType,
 } from '../model/domain.ts';
 import { HeaderHelpItem } from '../model/help';
@@ -551,16 +551,19 @@ export class Controller {
         'onProjectCreateRequest',
         async ({
             projectName,
+            projectType,
             errorCallback,
             okCallback,
         }: {
             projectName: string;
+            projectType: ProjectType;
             okCallback: () => void;
             errorCallback: (message: string) => void;
         }) => {
             this.wrapper('onProjectCreateRequest', () =>
                 this.projectsPageService.onProjectCreate(
                     projectName,
+                    projectType,
                     okCallback,
                     errorCallback
                 )
@@ -612,15 +615,9 @@ export class Controller {
 
     onProjectModeChangeRequest = createAsyncThunk(
         'onProjectModeChangeRequest',
-        async ({
-            mode,
-            projectId,
-        }: {
-            mode: ProjectMode;
-            projectId: string;
-        }) => {
+        async ({ type }: { type: ProjectType }) => {
             this.wrapper('onProjectModeChangeRequest', () =>
-                this.projectPageService.setProjectMode(mode, projectId)
+                this.projectPageService.setProjectType(type)
             );
         }
     );

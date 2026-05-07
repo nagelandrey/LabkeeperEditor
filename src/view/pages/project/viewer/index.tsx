@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, StorageState } from '../../../store';
 import { controller } from '../../../../main.tsx';
 import { useDictionary } from '../../../store/selectors/translations';
-import {
-    useCurrentProject,
-    useIsProjectReadonly,
-} from '../../../store/selectors/program.ts';
+
+import '../editor/ide/header/settingsButtons/markdownType/style.scss';
+
+import { useIsProjectReadonly } from '../../../store/selectors/program.ts';
 import { Button } from '../../../components/button';
 import { PromptModal } from './promptModal';
 import { SparkleIcon } from '../../../icons';
@@ -16,20 +16,9 @@ import { SparkleIcon } from '../../../icons';
 export const Viewer = () => {
     const dispatch = useDispatch<AppDispatch>();
     const dictionary = useSelector(useDictionary);
-    const project = useSelector(useCurrentProject);
     const isReadonly = useSelector(useIsProjectReadonly);
-    const currentRunTimeValue = useSelector(
-        (state: StorageState) => state.project.mode
-    );
 
-    const currentPersistValue = useSelector(
-        (state: StorageState) =>
-            state.persistence.projectCompileModes[
-                project?.projectId || 'default'
-            ]
-    );
-
-    const mode = currentPersistValue ?? currentRunTimeValue;
+    const mode = useSelector((state: StorageState) => state.project.mode);
 
     return (
         <div className="viewer-container">
