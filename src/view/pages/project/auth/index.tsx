@@ -505,7 +505,7 @@ const CodeView = () => {
                     type="rounded"
                     minimize={false}
                     onPress={handleSubmit}
-                    disabled={status === 'loading'}
+                    disabled={status === 'loading' || code.length === 0}
                 />
             </div>
             {isLoading && <LoadingSpinner />}
