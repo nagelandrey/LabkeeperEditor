@@ -16,6 +16,7 @@ global.structuredClone = (val) => {
 import { mockViewModelState } from '../../viewModel/repository';
 import { headerHelpItems } from '../../model/help';
 import {
+    CompileError,
     CompileSuccessResult,
     ComputationalOutputSegment,
     LabkeeperFile,
@@ -408,6 +409,52 @@ test('display-name-new-project-test', async () => {
             .projects()
             .map((p) => p.projectId + p.title)
     ).toStrictEqual(allprojects.map((p) => p.projectId + p.title));
+});
+
+test('back-button-resets-forbidden-project-error-for-unauthorized-user', async () => {
+    const { repository, projectPageService, rpi } = mockContext();
+
+    rpi.getAllProjectsRequest = jest.fn().mockResolvedValue({
+        code: 401,
+        body: {},
+        isOk: false,
+        isUnauth: true,
+        isForbidden: false,
+    });
+
+    repository.userViewModelRepository.setUserInfo({
+        isAuthenticated: false,
+        email: '',
+        id: 0,
+        tokens: 0,
+    });
+    repository.ideViewModelRepository.setGetProjectRequestState('forbidden');
+    repository.projectViewModelRepository.setReadOnly(true);
+    repository.projectViewModelRepository.setCompileErrorResult({
+        errors: [
+            {
+                code: CompileError.UNKNOWN_SYMBOL,
+                payload: {
+                    segmentId: 0,
+                    line: 0,
+                    position: 0,
+                },
+            },
+        ],
+    });
+
+    await projectPageService.onBackButtonClicked();
+
+    expect(repository.location()).toBe('/project/default');
+    expect(repository.ideViewModelRepository.getProjectRequestState()).toBe(
+        'unknown'
+    );
+    expect(repository.projectViewModelRepository.projectIsReadonly()).toBe(
+        false
+    );
+    expect(
+        repository.projectViewModelRepository.compileErrorResult()?.errors
+    ).toHaveLength(0);
 });
 
 /*

@@ -86,6 +86,16 @@ export class ResetService {
     resetProject(): void {
         this.programService.clearHistory();
 
+        this.repository.ideViewModelRepository.setGetProjectRequestState(
+            'unknown'
+        );
+        this.repository.ideViewModelRepository.setGetFilesRequestState(
+            'unknown'
+        );
+        this.repository.ideViewModelRepository.setSaveProjectRequestState(
+            'unknown'
+        );
+
         // Project
         this.repository.projectViewModelRepository.setProject(undefined);
         this.repository.projectViewModelRepository.setCurrentProgram(
