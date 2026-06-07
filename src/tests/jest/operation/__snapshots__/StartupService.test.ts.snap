@@ -2,6 +2,7 @@
 
 exports[`onAppStartup-qr-test 1`] = `
 MockViewModelRepositoryState {
+  "activeEditorLine": null,
   "activeSegmentIndex": -1,
   "captchaBypassToken": undefined,
   "cloneRequestState": "unknown",
@@ -20,6 +21,7 @@ MockViewModelRepositoryState {
   "currentView": "closed",
   "editModeForFilename": false,
   "editModeForProjectTitle": false,
+  "editorNavigationTarget": null,
   "email": "",
   "emailRequest": "unknown",
   "expandProblemViewer": false,
@@ -47,6 +49,8 @@ MockViewModelRepositoryState {
   "loginRequest": "unknown",
   "mode": "markdown",
   "passwordSetRequest": "unknown",
+  "pdfClickPosition": null,
+  "pdfNavigationTarget": null,
   "pdfUpdated": 0,
   "pendingSegmentEditorCursor": null,
   "previousActiveSegmentIndex": -1,
@@ -62,6 +66,7 @@ MockViewModelRepositoryState {
   "showSearch": false,
   "showShareModal": false,
   "showTour": false,
+  "synctexEditorPosition": null,
   "toasts": [],
   "tokens": 0,
   "undoEnabled": false,
