@@ -170,6 +170,15 @@ export class ProgramEditorService {
                                 .tooMuchFiles,
                             'error'
                         );
+                    } else if (res.code === 400) {
+                        thisCopy.repository.ideViewModelRepository.setGetFilesRequestState(
+                            'ok'
+                        );
+                        thisCopy.repository.toast(
+                            thisCopy.repository.dictionary.filemanager.errors
+                                .bad_name,
+                            'error'
+                        );
                     } else if (res.isUnauth) {
                         thisCopy.repository.toast(
                             thisCopy.repository.dictionary.filemanager.errors

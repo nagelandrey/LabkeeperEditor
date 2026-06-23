@@ -84,6 +84,12 @@ export class FileManagerService {
                     'error'
                 );
             }
+            if (result.code === 400) {
+                this.repository.toast(
+                    this.repository.dictionary.filemanager.errors.bad_name,
+                    'error'
+                );
+            }
             if (result.code === 409) {
                 this.repository.toast(
                     this.repository.dictionary.filemanager.errors.tooMuchFiles,
@@ -104,6 +110,7 @@ export class FileManagerService {
                 isResultOk = true;
             } else if (
                 result.code !== 413 &&
+                result.code !== 400 &&
                 result.code !== 409 &&
                 !result.isUnauth
             ) {
