@@ -44,3 +44,28 @@ test('file-manager-test-onFolderButtonClicked-unauthorized-on-default', async ()
 
     matchRepositorySnapshot(repository);
 });
+
+test('file-manager-test-onUploadFiles-csv-with-empty-mime', async () => {
+    const { startupService, fileManagerService, rpi } = mockContext();
+    mockAuthenticatedStartup(rpi);
+
+    await startupService.onAppStartup();
+
+    rpi.uploadFileRequest = jest.fn().mockResolvedValue({
+        code: 200,
+        body: '',
+        isOk: true,
+        isUnauth: false,
+        isForbidden: false,
+    });
+
+    const file = {
+        name: 'Frequency.csv',
+        size: 1024,
+        type: '',
+    } as File;
+
+    await fileManagerService.onUploadFiles([file]);
+
+    expect(rpi.uploadFileRequest).toHaveBeenCalledTimes(1);
+});

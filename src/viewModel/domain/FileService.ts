@@ -14,6 +14,14 @@ export class FileService {
     checkFile = (file: File, dictionary: Translations) => {
         const mbInBytes = 1048576;
         const maxSizeInMb = 5;
+        const supportedExtensions = [
+            '.png',
+            '.jpg',
+            '.jpeg',
+            '.svg',
+            '.txt',
+            '.csv',
+        ];
         if (file.size > mbInBytes * maxSizeInMb) {
             toast(
                 dictionary.filemanager.errors.tooBigFile.replace(
@@ -24,9 +32,15 @@ export class FileService {
             );
             throw new Error(checkFileErrorMessage);
         }
+        const fileName = file.name.toLowerCase();
+        const hasSupportedExtension = supportedExtensions.some((ext) =>
+            fileName.endsWith(ext)
+        );
         if (
             !file.type.startsWith('image/') &&
-            !file.type.startsWith('text/csv')
+            !file.type.startsWith('text/csv') &&
+            !file.type.startsWith('text/plain') &&
+            !hasSupportedExtension
         ) {
             toast(dictionary.filemanager.errors.notSupported, {
                 type: 'error',
