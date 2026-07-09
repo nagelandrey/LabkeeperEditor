@@ -304,6 +304,10 @@ export interface Translations {
         cancel: string;
         warn: string;
         err: string;
+        agreement_prefix: string;
+        privacy_policy: string;
+        agreement_and: string;
+        personal_data_consent: string;
     };
     prompt_modal: {
         title: string;

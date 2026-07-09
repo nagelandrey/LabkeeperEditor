@@ -329,6 +329,10 @@ export const ru: Translations = {
         err: 'Не удалось открыть почтовый клиент',
         contact_form: 'Связаться с нами через форму',
         contact_email: 'Напишите нам на почту',
+        agreement_prefix: 'Связываясь с нами, вы подтверждаете',
+        privacy_policy: 'политику конфиденциальности',
+        agreement_and: 'и',
+        personal_data_consent: 'согласие на обработку персональных данных',
     },
 
     prompt_modal: {

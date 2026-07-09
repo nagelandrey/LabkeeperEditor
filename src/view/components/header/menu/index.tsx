@@ -80,6 +80,10 @@ export const HeaderMenu = () => {
             title: dictionary.header_menu.about,
             onClick: () => openExternal(ABOUT_URL),
         },
+        {
+            title: dictionary.header_menu.contact_us,
+            onClick: openContactModal,
+        },
         ...(isEditorPage
             ? [
                   {

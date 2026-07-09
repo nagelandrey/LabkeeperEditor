@@ -317,6 +317,10 @@ export const en: Translations = {
         err: 'Failed to open mail client',
         contact_email: 'Contact email',
         contact_form: 'Contact form',
+        agreement_prefix: 'By contacting us, you acknowledge',
+        privacy_policy: 'the Privacy Policy',
+        agreement_and: 'and',
+        personal_data_consent: 'the Personal Data Processing Consent',
     },
 
     prompt_modal: {
