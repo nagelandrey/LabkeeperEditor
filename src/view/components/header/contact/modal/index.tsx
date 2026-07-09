@@ -12,7 +12,7 @@ import { colors } from '../../../../styles/colors.ts';
 import { useUser } from '../../../../store/selectors/program.ts';
 import { controller } from '../../../../../main.tsx';
 
-const contactEmail = 'contact@labkeeper.io';
+const contactEmail = 'labkeeper.io@gmail.com';
 
 export const ContactModal = () => {
     const dispatch = useDispatch<AppDispatch>();
