@@ -328,7 +328,9 @@ const EmailView = () => {
     const isLoading = status === 'loading';
 
     useEffect(() => {
-        setAgreementAccepted(false);
+        queueMicrotask(() => {
+            setAgreementAccepted(false);
+        });
     }, [isRegistration]);
 
     useEffect(() => {
