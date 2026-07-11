@@ -17,6 +17,7 @@ import {
     syncCodeMirrorLayout,
 } from '../../../../utils/refreshCodeMirrorLayout';
 import { textFileEditorWheelScroll } from './textFileEditorWheelScroll';
+import { isLatexTextFilePath } from '../../fileManager/svarFileTreeAdapter.ts';
 import '../ide/style.scss';
 import '../ide/header/style.scss';
 import './style.scss';
@@ -125,7 +126,7 @@ export const TextFileEditor = () => {
         if (!activeTextFile) {
             return [];
         }
-        if (activeTextFile.toLowerCase().endsWith('.tex')) {
+        if (isLatexTextFilePath(activeTextFile)) {
             return [langs.tex(), syntaxHighlighting(defaultHighlightStyle)];
         }
         return [];

@@ -177,14 +177,78 @@ export const joinFolderPath = (
     return `${folderPrefix}/${fileName}`;
 };
 
-export const isTextFilePath = (path: string): boolean => {
+const TEXT_FILE_EXTENSIONS = [
+    '.txt',
+    '.text',
+    '.md',
+    '.markdown',
+    '.csv',
+    '.tsv',
+    '.json',
+    '.jsonl',
+    '.yaml',
+    '.yml',
+    '.xml',
+    '.html',
+    '.htm',
+    '.css',
+    '.scss',
+    '.js',
+    '.jsx',
+    '.ts',
+    '.tsx',
+    '.py',
+    '.r',
+    '.m',
+    '.tex',
+    '.ltx',
+    '.latex',
+    '.sty',
+    '.cls',
+    '.bib',
+    '.bst',
+    '.bbl',
+    '.aux',
+    '.log',
+    '.out',
+    '.toc',
+    '.lof',
+    '.lot',
+    '.idx',
+    '.ind',
+    '.ilg',
+    '.glo',
+    '.gls',
+    '.glg',
+    '.ist',
+    '.acn',
+    '.acr',
+    '.alg',
+    '.fls',
+    '.fdb_latexmk',
+];
+
+const TEXT_FILE_NAMES = ['latexmkrc', '.latexmkrc'];
+
+export const isLatexTextFilePath = (path: string): boolean => {
     const lower = path.toLowerCase();
     return (
-        lower.endsWith('.txt') ||
         lower.endsWith('.tex') ||
-        lower.endsWith('.csv') ||
-        lower.endsWith('.bib') ||
-        lower.endsWith('.bst')
+        lower.endsWith('.ltx') ||
+        lower.endsWith('.latex') ||
+        lower.endsWith('.sty') ||
+        lower.endsWith('.cls')
+    );
+};
+
+export const isTextFilePath = (path: string): boolean => {
+    const lower = path.toLowerCase();
+    const name = lower.includes('/')
+        ? lower.slice(lower.lastIndexOf('/') + 1)
+        : lower;
+    return (
+        TEXT_FILE_NAMES.includes(name) ||
+        TEXT_FILE_EXTENSIONS.some((extension) => lower.endsWith(extension))
     );
 };
 
