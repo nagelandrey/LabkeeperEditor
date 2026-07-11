@@ -44,6 +44,10 @@ export class CompilationService {
     }
 
     private refreshProjectFiles = async (projectId: string) => {
+        if (!this.repository.userViewModelRepository.isAuthenticated()) {
+            return;
+        }
+
         await this.loaderService.loadFiles(projectId);
     };
 
