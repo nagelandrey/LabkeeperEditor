@@ -1,5 +1,4 @@
 import {
-    FILE_NAME,
     FILE_URL,
     matchRepositorySnapshot,
     mockAuthenticatedStartup,
